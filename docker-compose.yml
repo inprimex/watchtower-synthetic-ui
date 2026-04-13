@@ -1,0 +1,11 @@
+services:
+  synthetic-ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_SYNTHETIC_BASE_URL: ${VITE_SYNTHETIC_BASE_URL:-http://watchtower-synthetic:8100}
+    container_name: watchtower-synthetic-ui
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
