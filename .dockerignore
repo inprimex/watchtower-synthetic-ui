@@ -1,0 +1,42 @@
+# Keep the build context small and deterministic.
+#
+# The Dockerfile runs `npm ci` and `npm run build` inside the container, so we
+# deliberately exclude host-built artifacts (node_modules, dist) and anything
+# that shouldn't end up in the image (.env with secrets, git history, editor
+# state, tests — which are executed by CI, not the runtime image).
+
+**/node_modules
+**/dist
+.git
+.gitignore
+.github
+
+# Env files — runtime config is baked in via --build-arg VITE_SYNTHETIC_BASE_URL
+.env
+.env.*
+!.env.example
+
+# Developer state
+.vscode
+.idea
+*.swp
+.DS_Store
+Thumbs.db
+
+# Docs & meta that don't belong in the runtime image
+README.md
+CLAUDE.md
+.maestro
+.mcp.json
+openspec
+
+# Tests — vitest output would bloat the image; tests run in CI
+tests
+coverage
+*.test.ts
+*.test.tsx
+
+# Build-info emitted by `tsc -b`
+*.tsbuildinfo
+vite.config.d.ts
+vite.config.js

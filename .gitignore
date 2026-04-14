@@ -20,3 +20,9 @@ Thumbs.db
 *.tsbuildinfo
 vite.config.d.ts
 vite.config.js
+
+# Offline map tiles — populated by scripts/download-tiles.sh, not committed
+# (large, OSM-licensed). The directory itself is kept via .gitkeep so the
+# Dockerfile COPY does not fail on a fresh clone.
+public/tiles/**
+!public/tiles/.gitkeep

@@ -1,11 +1,43 @@
+# Compose stack for watchtower-synthetic-ui.
+#
+# Two deployment shapes are supported:
+#
+# 1. Standalone (this file only): just run the UI. It expects the synthetic
+#    backend to be reachable at VITE_SYNTHETIC_BASE_URL (baked at build time).
+#
+#       docker compose up --build
+#
+# 2. Composed with watchtower-synthetic (recommended for CP/field hosts):
+#    we use an external Docker network so the two independently-maintained
+#    compose stacks can reach each other by service DNS. Create the network
+#    once:
+#
+#       docker network create watchtower-net
+#
+#    then run each stack with that network attached (this repo already is;
+#    the synthetic repo's docker-compose.yml needs a `networks: [watchtower]`
+#    block added — see README.md "Field deployment").
 services:
   synthetic-ui:
     build:
       context: .
       dockerfile: Dockerfile
       args:
+        # Defaults to the service DNS when composed with watchtower-synthetic
+        # on the shared network; override via `.env` for standalone dev.
         VITE_SYNTHETIC_BASE_URL: ${VITE_SYNTHETIC_BASE_URL:-http://watchtower-synthetic:8100}
+    image: watchtower-synthetic-ui:local
     container_name: watchtower-synthetic-ui
     ports:
-      - "3000:3000"
+      - "${SYNTHETIC_UI_PORT:-3000}:3000"
     restart: unless-stopped
+    networks:
+      - watchtower
+
+# External so the synthetic stack (separate compose file / repo) can join the
+# same network by declaring it `external: true` on its side. If you are only
+# running the UI, a fresh network is created automatically.
+networks:
+  watchtower:
+    name: watchtower-net
+    external: true
