@@ -12,3 +12,11 @@ coverage/
 .DS_Store
 Thumbs.db
 *.local
+
+# Maestro marker file (local pointer to maestro folder)
+.maestro
+
+# TypeScript build info / emitted config wrappers from `tsc -b`
+*.tsbuildinfo
+vite.config.d.ts
+vite.config.js

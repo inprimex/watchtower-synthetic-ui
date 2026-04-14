@@ -1,11 +1,50 @@
+import { useState } from 'react';
+import { EnvironmentLibrary } from './components/EnvironmentLibrary';
+import { EnvironmentEditor } from './components/EnvironmentEditor';
+import { useHealth } from './hooks/useScenarioApi';
+import { SYNTHETIC_BASE_URL } from './config/backend';
+import './styles/app.css';
+
+type View =
+  | { kind: 'library' }
+  | { kind: 'editor'; scenarioId: string | null };
+
 export function App() {
+  const [view, setView] = useState<View>({ kind: 'library' });
+  const health = useHealth({ refetchInterval: 10_000 });
+
   return (
-    <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif' }}>
-      <h1>Watchtower — RF Environment Planner</h1>
-      <p>Scaffold ready. Waiting for Phase 2a implementation.</p>
-      <p>
-        Backend: <code>{import.meta.env.VITE_SYNTHETIC_BASE_URL || 'not configured'}</code>
-      </p>
+    <div className="app">
+      <header className="app__header">
+        <h1>Watchtower · RF Environment Planner</h1>
+        <div className="app__backend">
+          Backend: <code>{SYNTHETIC_BASE_URL}</code>
+          {health.isSuccess ? (
+            <span className="app__health app__health--ok">
+              · {health.data.status} · v{health.data.version}
+              {health.data.scenario ? ` · running ${health.data.scenario}` : ''}
+            </span>
+          ) : health.isError ? (
+            <span className="app__health app__health--err">· unreachable</span>
+          ) : (
+            <span className="app__health">· …</span>
+          )}
+        </div>
+      </header>
+
+      <main className="app__main">
+        {view.kind === 'library' ? (
+          <EnvironmentLibrary
+            onEdit={(id) => setView({ kind: 'editor', scenarioId: id })}
+            onCreate={() => setView({ kind: 'editor', scenarioId: null })}
+          />
+        ) : (
+          <EnvironmentEditor
+            scenarioId={view.scenarioId}
+            onBack={() => setView({ kind: 'library' })}
+          />
+        )}
+      </main>
     </div>
   );
 }

@@ -1,0 +1,290 @@
+/* Minimal styling — the UI is functional-first; Phase 3 polish can elaborate. */
+
+:root {
+  --color-bg: #f5f5f5;
+  --color-panel: #ffffff;
+  --color-border: #d0d0d0;
+  --color-accent: #2e8b57;
+  --color-text: #1a1a1a;
+  --color-muted: #666;
+  --color-danger: #c0392b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.app__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: #1f2a38;
+  color: #fff;
+}
+
+.app__header h1 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.app__backend {
+  font-size: 0.85rem;
+}
+
+.app__backend code {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+}
+
+.app__health--ok {
+  color: #a2f2c0;
+}
+
+.app__health--err {
+  color: #f2a2a2;
+}
+
+.app__main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Environment library --- */
+
+.env-lib {
+  padding: 1rem 1.5rem;
+}
+
+.env-lib__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.env-lib__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.env-lib__status {
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-muted);
+}
+
+.env-lib__status--error {
+  color: var(--color-danger);
+}
+
+.env-lib__table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+}
+
+.env-lib__table th,
+.env-lib__table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.env-lib__table th {
+  background: #fafafa;
+  font-weight: 600;
+}
+
+.env-lib__row--active {
+  background: #e8f5e9;
+}
+
+.env-lib__actions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.env-lib__empty {
+  color: var(--color-muted);
+  padding: 1rem;
+  text-align: center;
+}
+
+/* --- Environment editor --- */
+
+.env-editor {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.env-editor--loading {
+  padding: 2rem;
+  color: var(--color-muted);
+}
+
+.env-editor__header {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-panel);
+}
+
+.env-editor__id-input {
+  width: 220px;
+  font-family: ui-monospace, monospace;
+}
+
+.env-editor__desc-input {
+  flex: 1;
+  max-width: 420px;
+}
+
+.env-editor__status {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  margin-left: auto;
+}
+
+.env-editor__body {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.env-editor__sidebar {
+  width: 320px;
+  border-right: 1px solid var(--color-border);
+  padding: 0.75rem;
+  overflow-y: auto;
+  background: var(--color-panel);
+}
+
+.env-editor__map-wrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.map-view {
+  height: 100%;
+  width: 100%;
+}
+
+.env-editor__tools {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.mode-btn {
+  padding: 0.4rem;
+  background: #fafafa;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+}
+
+.mode-btn--active {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+
+.env-editor__hint {
+  margin: 0.25rem 0;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+.env-editor__note {
+  background: #fff8e1;
+  border: 1px solid #ffe082;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  border-radius: 3px;
+  margin-top: 0.5rem;
+}
+
+.entity-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.entity-panel h4 {
+  margin: 0 0 0.25rem 0;
+}
+
+.entity-panel label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.entity-panel input,
+.entity-panel select {
+  padding: 0.25rem 0.4rem;
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.entity-panel fieldset {
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  padding: 0.4rem;
+  margin: 0.25rem 0;
+}
+
+.entity-panel fieldset legend {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  padding: 0 0.25rem;
+}
+
+.entity-panel__remove {
+  margin-top: 0.5rem;
+  background: #fff;
+  border: 1px solid var(--color-danger);
+  color: var(--color-danger);
+  padding: 0.3rem;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.rf-marker__dot {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
+}
