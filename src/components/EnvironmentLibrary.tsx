@@ -21,9 +21,10 @@ import type { ScenarioConfig, ScenarioSummary } from '../types/scenario';
 export interface EnvironmentLibraryProps {
   onEdit: (scenarioId: string) => void;
   onCreate: () => void;
+  onOpenDashboard: () => void;
 }
 
-export function EnvironmentLibrary({ onEdit, onCreate }: EnvironmentLibraryProps) {
+export function EnvironmentLibrary({ onEdit, onCreate, onOpenDashboard }: EnvironmentLibraryProps) {
   const list = useScenarioList();
   const start = useStartScenario();
   const stop = useStopScenario();
@@ -62,6 +63,9 @@ export function EnvironmentLibrary({ onEdit, onCreate }: EnvironmentLibraryProps
           <span className="env-lib__active">
             Active: <strong>{active ?? '— none —'}</strong>
           </span>
+          {active ? (
+            <button onClick={onOpenDashboard}>Open dashboard →</button>
+          ) : null}
           <button onClick={onCreate}>+ New Environment</button>
         </div>
       </header>

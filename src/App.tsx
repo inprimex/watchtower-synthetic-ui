@@ -1,17 +1,21 @@
 import { useState } from 'react';
 import { EnvironmentLibrary } from './components/EnvironmentLibrary';
 import { EnvironmentEditor } from './components/EnvironmentEditor';
+import { SimulationDashboard } from './components/SimulationDashboard';
 import { useHealth } from './hooks/useScenarioApi';
 import { SYNTHETIC_BASE_URL } from './config/backend';
 import './styles/app.css';
 
 type View =
   | { kind: 'library' }
-  | { kind: 'editor'; scenarioId: string | null };
+  | { kind: 'editor'; scenarioId: string | null }
+  | { kind: 'dashboard' };
 
 export function App() {
   const [view, setView] = useState<View>({ kind: 'library' });
   const health = useHealth({ refetchInterval: 10_000 });
+
+  const back = () => setView({ kind: 'library' });
 
   return (
     <div className="app">
@@ -37,12 +41,12 @@ export function App() {
           <EnvironmentLibrary
             onEdit={(id) => setView({ kind: 'editor', scenarioId: id })}
             onCreate={() => setView({ kind: 'editor', scenarioId: null })}
+            onOpenDashboard={() => setView({ kind: 'dashboard' })}
           />
+        ) : view.kind === 'editor' ? (
+          <EnvironmentEditor scenarioId={view.scenarioId} onBack={back} />
         ) : (
-          <EnvironmentEditor
-            scenarioId={view.scenarioId}
-            onBack={() => setView({ kind: 'library' })}
-          />
+          <SimulationDashboard onBack={back} />
         )}
       </main>
     </div>
