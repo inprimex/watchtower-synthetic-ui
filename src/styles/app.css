@@ -288,3 +288,262 @@ body,
   border-radius: 50%;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
 }
+
+/* --- Coverage layer control --- */
+
+.layer-control {
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  padding: 0.4rem 0.5rem;
+  margin: 0;
+}
+
+.layer-control legend {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}
+
+.layer-control__row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  padding: 0.1rem 0;
+}
+
+.layer-control__swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+/* --- Simulation dashboard --- */
+
+.sim-dashboard {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.sim-dashboard--empty {
+  padding: 2rem;
+  color: var(--color-muted);
+  text-align: center;
+}
+
+.sim-dashboard__header {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-panel);
+}
+
+.sim-dashboard__ws-status {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.sim-dashboard__stop {
+  margin-left: auto;
+  background: #fff;
+  border: 1px solid var(--color-danger);
+  color: var(--color-danger);
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.sim-dashboard__body {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.sim-dashboard__sidebar {
+  width: 360px;
+  border-right: 1px solid var(--color-border);
+  padding: 0.75rem;
+  overflow-y: auto;
+  background: var(--color-panel);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sim-dashboard__map-wrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.sim-dashboard__tool-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.sim-dashboard__hint {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+/* --- Clock indicator --- */
+
+.clock-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #f0f4f8;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.85rem;
+}
+
+.clock-indicator--stale {
+  background: #fff3cd;
+}
+
+.clock-indicator--empty {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+.clock-indicator__mode {
+  color: var(--color-muted);
+}
+
+.clock-indicator__speed {
+  color: var(--color-accent);
+}
+
+.clock-indicator__stale-flag {
+  color: var(--color-danger);
+}
+
+/* --- SNR panel --- */
+
+.snr-panel {
+  overflow-x: auto;
+}
+
+.snr-panel--empty {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  padding: 0.5rem 0;
+}
+
+.snr-panel__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.snr-panel__table th,
+.snr-panel__table td {
+  border: 1px solid var(--color-border);
+  padding: 0.2rem 0.4rem;
+  text-align: right;
+}
+
+.snr-panel__table th {
+  background: #fafafa;
+  font-weight: 600;
+  text-align: center;
+}
+
+.snr-panel__node {
+  font-weight: 600;
+  text-align: left;
+  background: #fafafa;
+}
+
+.snr-panel__cell {
+  font-family: ui-monospace, monospace;
+}
+
+/* --- Live injection panel --- */
+
+.live-inject {
+  border-top: 1px solid var(--color-border);
+  padding-top: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.live-inject h4 {
+  margin: 0 0 0.25rem 0;
+}
+
+.live-inject__banner {
+  background: #fff3cd;
+  border: 1px solid #ffe082;
+  padding: 0.4rem 0.5rem;
+  border-radius: 3px;
+  margin: 0 0 0.5rem 0;
+  font-size: 0.8rem;
+}
+
+.live-inject section {
+  margin-bottom: 0.5rem;
+}
+
+.live-inject__row {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.live-inject__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.live-inject__list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fafafa;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.8rem;
+}
+
+.live-inject__muted {
+  color: var(--color-muted);
+  font-style: italic;
+  background: transparent !important;
+}
+
+.live-inject__status {
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  min-height: 1em;
+}
+
+.live-inject__gap-warning {
+  background: #fff3cd;
+  border: 1px solid #f5c518;
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin: 0.5rem 0;
+}
+
+.live-inject__gap-warning p {
+  margin: 0 0 0.4rem 0;
+}
+
+.live-inject__gap-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}

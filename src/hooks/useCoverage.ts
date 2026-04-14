@@ -5,7 +5,8 @@
  * `L.geoJSON()`. Coverage is recomputed server-side on every call — these
  * hooks are kept short-staletime so coverage redraws as soon as entities move.
  */
-import { useQuery } from '@tanstack/react-query';
+import { useCallback } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiRequest } from './apiClient';
 import type { CoverageFeatureCollection, CoverageKind } from '../types/coverage';
 
@@ -32,4 +33,17 @@ export function useCoverage(kind: CoverageKind, enabled = true) {
     // coverageKeys.all after mutations. Short stale time keeps overlays fresh.
     staleTime: 1_000,
   });
+}
+
+/**
+ * Returns a stable callback that invalidates every coverage query, causing
+ * all enabled `useCoverage(...)` subscribers to refetch. Used by the editor
+ * and live-dashboard after any mutation that could change coverage (entity
+ * add/remove/move) — supports the task 7.6 "what-if within 1 second" SLA.
+ */
+export function useInvalidateCoverage() {
+  const qc = useQueryClient();
+  return useCallback(() => {
+    qc.invalidateQueries({ queryKey: coverageKeys.all });
+  }, [qc]);
 }

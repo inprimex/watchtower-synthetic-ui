@@ -171,74 +171,93 @@ export function useValidateScenario() {
 
 // ---------------------------------------------------------------------------
 // Live injection — emitters, EW, SIGINT (require a running scenario)
+//
+// All live-injection mutations invalidate `coverageKeys.all` on success so
+// every enabled `useCoverage(...)` subscriber refetches — this is how the
+// editor hits the task 7.6 "coverage updates within 1 second" SLA after
+// adding/removing/moving an entity.
 // ---------------------------------------------------------------------------
 
 export function useAddEmitter() {
+  const qc = useQueryClient();
   return useMutation({
     mutationFn: (cfg: EmitterConfig) =>
       apiRequest<{ id: string; status: string; emitter_count: number }>('/api/emitters', {
         method: 'POST',
         body: cfg,
       }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['coverage'] }),
   });
 }
 
 export function useRemoveEmitter() {
+  const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) =>
       apiRequest<{ id: string; status: string }>(
         `/api/emitters/${encodeURIComponent(id)}`,
         { method: 'DELETE' },
       ),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['coverage'] }),
   });
 }
 
 export function useUpdateEmitter() {
+  const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ id, patch }: { id: string; patch: Partial<EmitterConfig> }) =>
       apiRequest<{ id: string; status: string }>(
         `/api/emitters/${encodeURIComponent(id)}`,
         { method: 'PATCH', body: patch },
       ),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['coverage'] }),
   });
 }
 
 export function useAddEWSystem() {
+  const qc = useQueryClient();
   return useMutation({
     mutationFn: (cfg: EWSystemConfig) =>
       apiRequest<{ id: string; status: string; ew_system_count: number }>('/api/ew-systems', {
         method: 'POST',
         body: cfg,
       }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['coverage'] }),
   });
 }
 
 export function useRemoveEWSystem() {
+  const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) =>
       apiRequest<{ id: string; status: string }>(
         `/api/ew-systems/${encodeURIComponent(id)}`,
         { method: 'DELETE' },
       ),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['coverage'] }),
   });
 }
 
 export function useAddSIGINTSystem() {
+  const qc = useQueryClient();
   return useMutation({
     mutationFn: (cfg: SIGINTSystemConfig) =>
       apiRequest<{ id: string; status: string; sigint_system_count: number }>(
         '/api/sigint-systems',
         { method: 'POST', body: cfg },
       ),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['coverage'] }),
   });
 }
 
 export function useRemoveSIGINTSystem() {
+  const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) =>
       apiRequest<{ id: string; status: string }>(
         `/api/sigint-systems/${encodeURIComponent(id)}`,
         { method: 'DELETE' },
       ),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['coverage'] }),
   });
 }
