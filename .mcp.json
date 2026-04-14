@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "maestro-bus": {
+      "command": "bash",
+      "args": [
+        "../../maestro-plugin/servers/run-server.sh",
+        "bus_server.py"
+      ],
+      "env": {
+        "PYTHONUNBUFFERED": "1"
+      }
+    }
+  }
+}
